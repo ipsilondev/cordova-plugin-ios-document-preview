@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova-plugin-ios-document-preview" version="1.0.0">
 
-    <name>iOSDocumentPreview</name>
-    <description>An iOS document preview and open plugin</description>
-    <author>Sebastian Döll</author>
-    <license>MIT</license>
+  <name>iOSDocumentPreview</name>
+  <description>An iOS document preview and open plugin</description>
+  <author>Sebastian Döll</author>
+  <license>MIT</license>
 
-    <engines>
-        <engine name="cordova" version=">=4.0.0" />
-    </engines>
+  <engines>
+      <engine name="cordova" version=">=4.0.0" />
+  </engines>
 
-    <js-module src="www/iOSDocumentPreview.js" name="iOSDocumentPreview">
-        <clobbers target="iOSDocumentPreview" />
-    </js-module>
+  <js-module src="www/iOSDocumentPreview.js" name="iOSDocumentPreview">
+      <clobbers target="iOSDocumentPreview" />
+  </js-module>
 
-    <!-- iOS -->
-    <platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <feature name="iOSDocumentPreview">
-                <param name="ios-package" value="CDViOSDocumentPreview" />
-            </feature>
-        </config-file>
-        <source-file src="src/ios/iOSDocumentPreview.swift" />
-        <header-file src="src/ios/iOSDocumentPreview-Bridging-Header.h" />
-    </platform>
+  <!-- iOS -->
+  <platform name="ios">
+    <hook type="after_plugin_install" src="scripts/afterInstall.js" />
+    <config-file target="config.xml" parent="/*">
+      <feature name="iOSDocumentPreview">
+        <param name="ios-package" value="CDViOSDocumentPreview" />
+      </feature>
+    </config-file>
+    <source-file src="src/ios/iOSDocumentPreview.swift" />
+    <header-file src="src/ios/iOSDocumentPreview-Bridging-Header.h" />
+  </platform>
 
 </plugin>

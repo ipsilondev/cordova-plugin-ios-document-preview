@@ -1,11 +1,57 @@
 import Foundation
 
- @objc(CDViOSDocumentPreview) class iOSDocumentPreview : CDVPlugin {
+ @objc(CDViOSDocumentPreview) class iOSDocumentPreview : CDVPlugin, UIDocumentInteractionControllerDelegate {
     func open(command: CDVInvokedUrlCommand) {
-        let file = command.arguments[0] as String
-        let type = command.arguments[1] as String
+        // run on the background thread
+            // force type casting of AnyObject
+            var file = command.arguments[0] as! String
+            var type = command.arguments[1] as! String
+            var result: CDVPluginResult?
 
-        var pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAsString: "Hello \(message)")
-        commandDelegate.sendPluginResult(pluginResult, callbackId:command.callbackId)
+
+            dispatch_async(dispatch_get_main_queue()) {
+                // using print; faster then NSLog
+                print("Looking for \(file) in ")
+
+                let documentPath = NSBundle.mainBundle().pathForResource("friedman53", ofType: "pdf")
+                let documentURL = NSURL(fileURLWithPath: documentPath!, isDirectory: false)
+
+                let documentController = UIDocumentInteractionController(URL: documentURL)
+                documentController.delegate = self
+
+                let wasOpen = documentController.presentPreviewAnimated(true)
+
+                if (wasOpen) {
+                    result = CDVPluginResult(status: CDVCommandStatus_OK, messageAsBool: true)
+                } else {
+                    result = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAsBool: false)
+                }
+
+                self.commandDelegate?.sendPluginResult(result, callbackId: command.callbackId)
+
+            }
+
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                // TODO: test if this is a URI or a path
+//                NSURL *fileURL = [NSURL URLWithString:path];
+//
+//                localFile = fileURL.path;
+//
+//                NSLog(@"looking for file at %@", fileURL);
+//                NSFileManager *fm = [NSFileManager defaultManager];
+//                if(![fm fileExistsAtPath:localFile]) {
+//                    NSDictionary *jsonObj = @{@"status" : @"9",
+//                        @"message" : @"File does not exist"};
+//                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+//                        messageAsDictionary:jsonObj];
+//                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+//                    return;
+//                }
+
     }
+
+    func documentInteractionControllerViewControllerForPreview(controller: UIDocumentInteractionController) -> UIViewController {
+        return self.viewController!
+    }
+
 }

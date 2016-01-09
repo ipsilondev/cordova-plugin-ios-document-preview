@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/katallaxie/cordova-plugin-ios-document-preview/issues"
   },
-  "homepage": "https://github.com/katallaxie/cordova-plugin-ios-document-preview#readme"
+  "homepage": "https://github.com/katallaxie/cordova-plugin-ios-document-preview#readme",
+  "dependencies": {
+    "xcode": "^0.8.2"
+  }
 }
