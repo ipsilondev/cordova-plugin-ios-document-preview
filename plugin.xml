@@ -24,6 +24,12 @@
     </config-file>
     <source-file src="src/ios/iOSDocumentPreview.swift" />
     <header-file src="src/ios/iOSDocumentPreview-Bridging-Header.h" />
+    <config-file target="*-Info.plist" parent="UIFileSharingEnabled">
+            <true/>
+    </config-file>
+    <config-file target="*-Info.plist" parent="LSSupportsOpeningDocumentsInPlace">
+            <true/>
+    </config-file>
   </platform>
 
 </plugin>

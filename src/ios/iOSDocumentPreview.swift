@@ -13,7 +13,7 @@ import Foundation
                 // using print; faster then NSLog
                 print("Looking for \(file) in ")
 
-                let documentPath = NSBundle.mainBundle().pathForResource("friedman53", ofType: "pdf")
+                let documentPath = NSBundle.mainBundle().pathForResource(file, ofType: type)
                 let documentURL = NSURL(fileURLWithPath: documentPath!, isDirectory: false)
 
                 let documentController = UIDocumentInteractionController(URL: documentURL)
